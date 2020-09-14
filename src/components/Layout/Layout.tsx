@@ -5,10 +5,10 @@ import './Layout.scss';
 function Layout(props: React.PropsWithChildren<any>): React.ReactElement {
   return (
     <div className="px-3">
-      <Navbar variant="dark" className="demo-navbar fixed-top">
+      <Navbar variant="dark" expand="lg" className="demo-navbar fixed-top">
         <Navbar.Brand href="#">Curves Demo</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+        <Navbar.Toggle aria-controls="layout-navbar-nav" />
+        <Navbar.Collapse id="layout-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Link href="#intro">Introduction</Nav.Link>
             <Nav.Link href="#curvetypes">Curve Types</Nav.Link>
