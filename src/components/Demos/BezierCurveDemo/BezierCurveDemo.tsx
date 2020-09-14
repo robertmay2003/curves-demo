@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import './BezierCurveDemo.scss';
 import { BezierHandle, BezierKeyframe, Curve, Keyframe } from 'curves';
 import CurveDemo from '../CurveDemo/CurveDemo';
@@ -17,18 +17,20 @@ function BezierCurveDemo(): React.ReactElement {
     );
   }
 
+  const curveRef = useRef((() => {
+    const curve = Curve.bezierBuilder(0, 10, 10);
+    for (let i = 2; i < 10; i += 2) {
+      curve.addKeyframe(BezierKeyframe.automatic(i, Math.floor(Math.random() * 50) / 5));
+    }
+    return curve;
+  })());
+
   return (
     <CurveDemo<number>
       title="Bezier Curve Demo"
-      description="A curve constructed using BezierKeyframes that can be used to animate numeric values. The BezierKeyframe uses cubic bezier interpolation for easing."
+      description="A curve constructed using automatic BezierKeyframes that can be used to animate numeric values. The BezierKeyframe uses cubic bezier interpolation for easing."
       valueInput={NumberKeyframeValueInput}
-      curve={(() => {
-        const curve = Curve.bezierBuilder(0, 10, 10);
-        for (let i = 2; i < 10; i += 2) {
-          curve.addKeyframe(BezierKeyframe.automatic(i, Math.floor(Math.random() * 50) / 5));
-        }
-        return curve;
-      })()}
+      curve={curveRef}
       displayGenerator={
           (curve: Curve<number>, keys: { x: number, y: number }[]) => {
             const curvesData: [object] = [{

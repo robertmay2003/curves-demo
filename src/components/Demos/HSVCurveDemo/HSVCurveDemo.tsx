@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { ColorHelper, Curve, HSVColor } from 'curves';
 import CurveDemo from '../CurveDemo/CurveDemo';
 import TitledColorBar from '../../ColorBar/TitledColorBar/TitledColorBar';
@@ -31,16 +31,18 @@ function HSVCurveDemo(): React.ReactElement {
     { color: { r: 0, g: 255, b: 0 }, time: 1 },
   ]);
 
+  const curveRef = useRef(Curve.hsvColorBuilder(
+    { h: 0, s: 100, v: 50 },
+    { h: 360, s: 40, v: 100 },
+    10,
+  ));
+
   return (
     <CurveDemo<HSVColor>
       title="HSV Color Curve Demo"
       description="A curve constructed using HSVColorKeyframes that can be used to animate color values."
       valueInput={HSVColorKeyframeValueInput}
-      curve={Curve.hsvColorBuilder(
-        { h: 0, s: 100, v: 50 },
-        { h: 360, s: 40, v: 100 },
-        10,
-      )}
+      curve={curveRef}
       displayGenerator={
           (curve: Curve<HSVColor>, keys: { x: number, y: HSVColor }[]) => {
             setColorBarKeys(keys.map((key) => ({

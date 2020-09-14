@@ -7,7 +7,6 @@ function ObjectKeyframeValueInput(props: KeyframeValueInputProps<object>) {
   const [json, setJson] = useState(props.defaultValue);
 
   function handleEdit(edit) {
-    console.log(edit);
     props.onChange(edit.updated_src);
     setJson(edit.updated_src);
   }

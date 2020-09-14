@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './CurveDemo.scss';
 import { Curve } from 'curves';
 import { Collapse, Button } from 'react-bootstrap';
@@ -9,7 +9,7 @@ import { KeyframeValueInputProps } from './CurveEditor/KeyframeEditor/KeyframeVa
 interface CurveDemoProps<T> {
     title?: string;
     description?: string;
-    curve: Curve<T>;
+    curve: React.RefObject<Curve<T>>;
     steps?: number;
     display?: React.ReactElement;
     displayGenerator?: (curve: Curve<T>, keys: {x: number, y: T}[]) => Object;

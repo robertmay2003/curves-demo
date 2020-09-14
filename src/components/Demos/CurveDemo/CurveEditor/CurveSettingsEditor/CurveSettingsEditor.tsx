@@ -5,7 +5,7 @@ import { Curve, EndBehavior } from 'curves';
 import { DisplayOptions } from '../../CurveDisplay/CurveDisplay';
 
 interface CurveSettingsEditorProps<T> {
-    curve: Curve<T>
+    curve: React.RefObject<Curve<T>>;
     displayOptions: DisplayOptions;
     onUpdate: (opts?: DisplayOptions)=>void;
 }
@@ -15,14 +15,16 @@ function CurveSettingsEditor<T>(props: CurveSettingsEditorProps<T>): React.React
   const endBehaviorEntries = endBehaviorNums.map((n) => EndBehavior[n]);
 
   function updateRangeMax(max: number) {
+    if (!props.curve.current) return;
     const opts = props.displayOptions;
-    opts.range = { min: props.displayOptions.range?.min ?? 0, max };
+    opts.range = { min: props.displayOptions.range?.min ?? props.curve.current.startTime, max };
     props.onUpdate(opts);
   }
 
   function updateRangeMin(min: number) {
+    if (!props.curve.current) return;
     const opts = props.displayOptions;
-    opts.range = { max: props.displayOptions.range?.max ?? props.curve.duration, min };
+    opts.range = { max: props.displayOptions.range?.max ?? props.curve.current.endTime, min };
     props.onUpdate(opts);
   }
 
@@ -37,7 +39,8 @@ function CurveSettingsEditor<T>(props: CurveSettingsEditorProps<T>): React.React
               as="select"
               onChange={(e) => {
                 const { value } = e.target as HTMLInputElement;
-                props.curve.endBehaviour = EndBehavior[value];
+                if (!props.curve.current) return;
+                props.curve.current.endBehaviour = EndBehavior[value];
                 props.onUpdate();
               }}
             >
@@ -52,12 +55,13 @@ function CurveSettingsEditor<T>(props: CurveSettingsEditorProps<T>): React.React
           <Col>
             <Form.Control
               type="number"
-              defaultValue={props.curve.smoothing}
+              defaultValue={props.curve.current ? props.curve.current.smoothing : 0.25}
               step={0.05}
               onChange={(e) => {
                 const { value } = e.target as HTMLInputElement;
                 if (!isNaN(Number(value))) {
-                  props.curve.smoothing = Number(value);
+                  if (!props.curve.current) return;
+                  props.curve.current.smoothing = Number(value);
                   props.onUpdate();
                 }
               }}
@@ -74,7 +78,7 @@ function CurveSettingsEditor<T>(props: CurveSettingsEditorProps<T>): React.React
             <Form.Label>Min</Form.Label>
             <Form.Control
               type="number"
-              defaultValue={0}
+              defaultValue={props.curve.current ? props.curve.current.endTime : 0}
               onChange={(e) => {
                 const { value } = e.target as HTMLInputElement;
                 if (!isNaN(Number(value))) {
@@ -87,7 +91,7 @@ function CurveSettingsEditor<T>(props: CurveSettingsEditorProps<T>): React.React
             <Form.Label>Max</Form.Label>
             <Form.Control
               type="number"
-              defaultValue={props.curve.endTime}
+              defaultValue={props.curve.current ? props.curve.current.endTime : 10}
               onChange={(e) => {
                 const { value } = e.target as HTMLInputElement;
                 if (!isNaN(Number(value))) {

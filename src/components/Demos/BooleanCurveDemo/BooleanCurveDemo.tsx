@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import './BooleanCurveDemo.scss';
 import { Curve } from 'curves';
 import BooleanKeyframe from 'curves/lib/src/keyframes/BooleanKeyframe';
@@ -6,16 +6,18 @@ import CurveDemo from '../CurveDemo/CurveDemo';
 import BooleanKeyframeValueInput from './BooleanKeyframeValueInput/BooleanKeyframeValueInput';
 
 function BooleanCurveDemo(): React.ReactElement {
+  const curveRef = useRef(new Curve<boolean>([
+    new BooleanKeyframe(0, false),
+    new BooleanKeyframe(5, true),
+    new BooleanKeyframe(10, false),
+  ]));
+
   return (
     <CurveDemo <boolean>
       title="Boolean Curve Demo"
       description="A curve constructed using StringKeyframes that can be used to animate string values."
       valueInput={BooleanKeyframeValueInput}
-      curve={new Curve<boolean>([
-        new BooleanKeyframe(0, false),
-        new BooleanKeyframe(5, true),
-        new BooleanKeyframe(10, false),
-      ])}
+      curve={curveRef}
       displayGenerator={
           (curve: Curve<boolean>, keys: { x: number, y: boolean }[]) => ({
             animationEnabled: true,

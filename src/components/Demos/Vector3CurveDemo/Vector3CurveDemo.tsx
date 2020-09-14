@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Curve, Vector3 } from 'curves';
 import CurveDemo from '../CurveDemo/CurveDemo';
 import Vector3ThreeJSDemo from './Vector3ThreeJSDemo/Vector3ThreeJSDemo';
@@ -11,13 +11,14 @@ function Vector3CurveDemo(): React.ReactElement {
     { x: 5, y: 1, z: 10 },
     10,
   );
+  const curveRef = useRef(demoCurve);
 
   return (
     <CurveDemo <Vector3>
       title="Vector3 Curve Demo"
       description="A curve constructed using Vector3Keyframes that can be used to animate three dimensional vector values, such as positions, rotations, scales, and other transformations."
       valueInput={Vector3KeyframeValueInput}
-      curve={demoCurve}
+      curve={curveRef}
       displayGenerator={
           (curve: Curve<Vector3>, keys: { x: number, y: Vector3 }[]) => ({
             animationEnabled: true,
@@ -104,7 +105,7 @@ function Vector3CurveDemo(): React.ReactElement {
           })
       }
     >
-      <Vector3ThreeJSDemo curve={demoCurve} />
+      <Vector3ThreeJSDemo curve={curveRef} />
     </CurveDemo>
   );
 }

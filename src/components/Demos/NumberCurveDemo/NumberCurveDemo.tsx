@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import './NumberCurveDemo.scss';
 import { Curve, EndBehavior, NumberKeyframe } from 'curves';
 import CurveDemo from '../CurveDemo/CurveDemo';
 import NumberKeyframeValueInput from './NumberKeyframeValueInput/NumberKeyframeValueInput';
 
 function NumberCurveDemo(): React.ReactElement {
+  const curveRef = useRef(Curve.floatBuilder(0, 1, 10));
+
   return (
     <CurveDemo<number>
       title="Number Curve Demo"
       description="A curve constructed using NumberKeyframes that can be used to animate numeric values."
-      curve={Curve.floatBuilder(0, 1, 10)}
+      curve={curveRef}
       valueInput={NumberKeyframeValueInput}
       displayGenerator={
           (curve: Curve<number>, keys: { x: number, y: number }[]) => ({

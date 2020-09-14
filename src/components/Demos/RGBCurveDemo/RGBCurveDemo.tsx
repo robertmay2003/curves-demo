@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Curve, RGBColor } from 'curves';
 import CurveDemo from '../CurveDemo/CurveDemo';
 import ColorBar from '../../ColorBar/ColorBar';
@@ -11,16 +11,18 @@ function RGBCurveDemo(): React.ReactElement {
     { color: { r: 255, g: 0, b: 0 }, time: 1 },
   ]);
 
+  const curveRef = useRef(Curve.rgbColorBuilder(
+    { r: 255, g: 200, b: 0 },
+    { r: 0, g: 180, b: 220 },
+    10,
+  ));
+
   return (
     <CurveDemo <RGBColor>
       title="RGB Color Curve Demo"
       description="A curve constructed using RGBColorKeyframes that can be used to animate color values."
       valueInput={RGBColorKeyframeValueInput}
-      curve={Curve.rgbColorBuilder(
-        { r: 255, g: 200, b: 0 },
-        { r: 0, g: 180, b: 220 },
-        10,
-      )}
+      curve={curveRef}
       displayGenerator={
           (curve: Curve<RGBColor>, keys: { x: number, y: RGBColor }[]) => {
             setColorBarKeys(keys.map((key) => ({

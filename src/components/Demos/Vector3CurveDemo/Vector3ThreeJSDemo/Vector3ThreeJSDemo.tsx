@@ -17,13 +17,15 @@ import * as images from '../../../../assets/images/*.*';
 extend({ OrbitControls });
 
 interface Vector3ThreeJSDemoProps {
-    curve: Curve<Vector3>;
+    curve: React.RefObject<Curve<Vector3>>;
     steps?: number;
 }
 
 function Vector3ThreeJSDemo(props: Vector3ThreeJSDemoProps): React.ReactElement {
   const [time, setTime] = useState(0);
-  const duration = (props.curve.duration + props.curve.startTime);
+  if (!props.curve.current) return <div>No curve</div>;
+
+  const duration = (props.curve.current.duration + props.curve.current.startTime);
   const stepTime = duration / (props.steps ?? 100);
 
   const handleChange = (event: any, newValue: number | number[]) => {
@@ -117,7 +119,7 @@ function Vector3ThreeJSDemo(props: Vector3ThreeJSDemoProps): React.ReactElement 
             material={boxMaterial}
             position={
               (() => {
-                const pos = props.curve.evaluate(time);
+                const pos = props.curve.current.evaluate(time);
                 return [pos.x, pos.y, pos.z];
               })()
             }
@@ -141,11 +143,11 @@ function Vector3ThreeJSDemo(props: Vector3ThreeJSDemoProps): React.ReactElement 
         <h5>Adjust Time</h5>
         <br />
         <Slider
-          defaultValue={props.curve.startTime}
+          defaultValue={props.curve.current.startTime}
           onChange={handleChange}
           step={stepTime}
-          min={props.curve.startTime}
-          max={props.curve.endTime}
+          min={props.curve.current.startTime}
+          max={props.curve.current.endTime}
         />
       </div>
     </div>

@@ -3,7 +3,7 @@
 ##### 📈 Easily define and evaluate eased curves, similar to Unity's AnimationCurves with modifiers akin to Blender's FCurve Modifiers.
 
 Installation:
-```npm i curves```
+`npm i curves`
 
 #### [npm](https://www.npmjs.com/package/curves) ![npmlogo](https://raw.githubusercontent.com/npm/logos/master/npm%20square/npm-16.png)
 #### [documentation](http://robertzmay.com/curves-documentation/) 📖

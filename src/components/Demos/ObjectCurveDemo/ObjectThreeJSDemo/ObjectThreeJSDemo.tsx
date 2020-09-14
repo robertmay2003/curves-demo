@@ -19,7 +19,7 @@ import * as images from '../../../../assets/images/*.*';
 import * as models from '../../../../assets/models/*.glb';
 
 interface ObjectThreeJSDemoProps {
-  curve: Curve<object>;
+  curve: React.RefObject<Curve<object>>;
   onTimeChange: (time: number) => void;
   steps?: number;
 }
@@ -27,7 +27,9 @@ interface ObjectThreeJSDemoProps {
 function ObjectThreeJSDemo(props: ObjectThreeJSDemoProps): React.ReactElement {
   const [time, setTime] = useState(0);
   const [hdri, setHDRI] = useState<THREE.Texture>();
-  const duration = (props.curve.duration + props.curve.startTime);
+  if (!props.curve.current) return <div>No curve</div>;
+
+  const duration = (props.curve.current.duration + props.curve.current.startTime);
   const stepTime = duration / (props.steps ?? 100);
 
   function onTimeChange(t: number) {
@@ -88,7 +90,7 @@ function ObjectThreeJSDemo(props: ObjectThreeJSDemoProps): React.ReactElement {
           <ThreeDemoFloor material={floorMaterial} />
 
           <ThreeDemoCar
-            carSettings={props.curve.evaluate(time)}
+            carSettings={props.curve.current.evaluate(time)}
           />
           <LoadMultiple
             url={models.easel}
@@ -166,11 +168,11 @@ function ObjectThreeJSDemo(props: ObjectThreeJSDemoProps): React.ReactElement {
         <h5>Adjust Time</h5>
         <br />
         <Slider
-          defaultValue={props.curve.startTime}
+          defaultValue={props.curve.current.startTime}
           onChange={handleChange}
           step={stepTime}
-          min={props.curve.startTime}
-          max={props.curve.endTime}
+          min={props.curve.current.startTime}
+          max={props.curve.current.endTime}
         />
       </div>
     </div>

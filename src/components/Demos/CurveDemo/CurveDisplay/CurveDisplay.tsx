@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { Curve } from 'curves';
 import CanvasJSReact from '../../../../lib/canvasjs/canvasjs.react';
 import './CurveDisplay.scss';
-import { Curve } from 'curves';
 
 const { CanvasJS } = CanvasJSReact;
 const { CanvasJSChart } = CanvasJSReact;
@@ -11,7 +11,7 @@ export interface DisplayOptions {
 }
 
 interface CurveDisplayProps<T> {
-  curve?: Curve<T>;
+  curve?: React.RefObject<Curve<T>>;
   steps?: number;
   secondaryDisplay?: React.ReactElement;
   displayOptions?: DisplayOptions;
@@ -24,7 +24,9 @@ function CurveDisplay<T>(props: React.PropsWithChildren<CurveDisplayProps<T>>): 
   const [chart, setChart] = useState();
 
   const generateDisplay = () => {
-    const curve: Curve<T> = props.curve ?? new Curve<T>();
+    if (!props.curve?.current) return;
+
+    const curve: Curve<T> = props.curve?.current;
     let endTime = (curve.duration + curve.startTime);
     let startTime = 0;
     const steps = props.steps ?? 100;
@@ -45,7 +47,6 @@ function CurveDisplay<T>(props: React.PropsWithChildren<CurveDisplayProps<T>>): 
     newOptions.title = undefined;
 
     if (props.displayOptions?.range) {
-      console.log('fuck');
       // @ts-ignore
       Object.assign(newOptions.axisX, props.displayOptions.range);
     }

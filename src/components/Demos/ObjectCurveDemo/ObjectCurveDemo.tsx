@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import './ObjectCurveDemo.scss';
 import ReactJson from 'react-json-view';
 import { Curve, Modifiers } from 'curves';
@@ -41,17 +41,19 @@ function ObjectCurveDemo(): React.ReactElement {
     10,
   );
 
+  const curveRef = useRef(demoCurve);
+
   return (
     <CurveDemo<object>
       title="Object Curve Demo"
       description="A curve constructed using ObjectKeyframes. ObjectKeyframes can be used to interpolate between any JSON values. For this demo, a scene has been set up that can be controlled by the value of the JSON returned by evaluating the curve."
       valueInput={ObjectKeyframeValueInput}
-      curve={demoCurve}
+      curve={curveRef}
       display={(
         <div className="object-logger-container" style={{ backgroundColor }}>
           <div className="json-logger">
             <ReactJson
-              src={demoCurve.evaluate(time)}
+              src={curveRef.current.evaluate(time)}
               displayDataTypes={false}
               displayObjectSize={false}
             />
@@ -59,7 +61,7 @@ function ObjectCurveDemo(): React.ReactElement {
         </div>
       )}
     >
-      <ObjectThreeJSDemo curve={demoCurve} onTimeChange={setTime} />
+      <ObjectThreeJSDemo curve={curveRef} onTimeChange={setTime} />
     </CurveDemo>
   );
 }

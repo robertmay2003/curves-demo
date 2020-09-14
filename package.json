@@ -24,7 +24,7 @@
     "constate": "^2.0.0",
     "cookie-parser": "~1.4.3",
     "cubic-roots": "^2.0.0",
-    "curves": "^1.0.2",
+    "curves": "^1.0.11",
     "debug": "~2.6.9",
     "deep-equal": "^2.0.3",
     "eaz": "^1.0.2",

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import './ListCurveDemo.scss';
 import { ColorHelper, Curve, HSVColor, RGBColor } from 'curves';
 import CurveDemo from '../CurveDemo/CurveDemo';
@@ -31,11 +31,13 @@ function ListCurveDemo(): React.ReactElement {
     return Array.prototype.slice.call(floatArray);
   }
 
+  const curveRef = useRef(Curve.listBuilder(randomKey(2, 5), randomKey(4, 5), 10));
+
   return (
     <CurveDemo <number[]>
       title="List Curve Demo"
       description="A curve constructed using ListKeyframes that can be used to animate lists of number values."
-      curve={Curve.listBuilder(randomKey(2, 5), randomKey(4, 5), 10)}
+      curve={curveRef}
       valueInput={ListKeyframeValueInput}
       displayGenerator={
           (curve: Curve<number[]>, keys: { x: number, y: number[] }[]) => {

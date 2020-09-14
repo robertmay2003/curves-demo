@@ -20,39 +20,39 @@ function Demos(): React.ReactElement {
         </Col>
       </Row>
       <Row>
-        <Col lg={6}>
+        <Col xl={6} className="px-4">
           <NumberCurveDemo />
         </Col>
-        <Col lg={6}>
+        <Col xl={6} className="px-4">
           <StringCurveDemo />
         </Col>
       </Row>
       <Row>
-        <Col lg={6}>
+        <Col xl={6} className="px-4">
           <BooleanCurveDemo />
         </Col>
-        <Col lg={6}>
+        <Col xl={6} className="px-4">
           <ListCurveDemo />
         </Col>
       </Row>
       <Row>
-        <Col lg={6}>
+        <Col xl={6} className="px-4">
           <RGBCurveDemo />
         </Col>
-        <Col lg={6}>
+        <Col xl={6} className="px-4">
           <HSVCurveDemo />
         </Col>
       </Row>
       <Row>
-        <Col lg={6}>
+        <Col xl={6} className="px-4">
           <Vector3CurveDemo />
         </Col>
-        <Col lg={6}>
+        <Col xl={6} className="px-4">
           <ObjectCurveDemo />
         </Col>
       </Row>
       <Row>
-        <Col lg={6}>
+        <Col xl={6} className="px-4">
           <BezierCurveDemo />
         </Col>
       </Row>

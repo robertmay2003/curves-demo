@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import './StringCurveDemo.scss';
 import { Curve, Modifiers } from 'curves';
 import SecondaryStringDisplay from './SecondaryStringDisplay/SecondaryStringDisplay';
@@ -7,6 +7,7 @@ import StringKeyframeValueInput from './StringKeyframeValueInput/StringKeyframeV
 
 function StringCurveDemo(): React.ReactElement {
   const demoCurve = Curve.stringBuilder('Hello World!', 'Robert May', 10);
+  const curveRef = useRef(demoCurve);
 
   function stringToVal(str: string) {
     return str.split('')
@@ -16,9 +17,9 @@ function StringCurveDemo(): React.ReactElement {
 
   return (
     <CurveDemo <string>
-      title="String Curve Display"
+      title="String Curve Demo"
       description="A curve constructed using StringKeyframes that can be used to animate string values."
-      curve={demoCurve}
+      curve={curveRef}
       valueInput={StringKeyframeValueInput}
       displayGenerator={
           (curve: Curve<string>, keys: { x: number, y: string }[]) => ({
@@ -63,7 +64,7 @@ function StringCurveDemo(): React.ReactElement {
           })
       }
     >
-      <SecondaryStringDisplay curve={demoCurve} />
+      <SecondaryStringDisplay curve={curveRef} />
     </CurveDemo>
   );
 }

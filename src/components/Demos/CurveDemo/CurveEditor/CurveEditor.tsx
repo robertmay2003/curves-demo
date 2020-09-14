@@ -8,7 +8,7 @@ import KeyframeEditor from './KeyframeEditor/KeyframeEditor';
 import { KeyframeValueInputProps } from './KeyframeEditor/KeyframeValueInput/KeyframeValueInput';
 
 interface CurveEditorProps<T> {
-    curve: Curve<T>;
+    curve: React.RefObject<Curve<T>>;
     displayOptions: DisplayOptions;
     onUpdate: (opts?: DisplayOptions)=>void;
     valueInput: (props: KeyframeValueInputProps<T>) => React.ReactElement; // eslint-disable-line react/no-unused-prop-types
