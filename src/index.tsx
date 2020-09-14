@@ -7,7 +7,7 @@ import './index.scss';
 import Home from './pages/Home/Home';
 
 render((
-  <BrowserRouter>
+  <BrowserRouter basename="/curves-demo">
     <Switch>
       <Route exact path="/" component={Home} />
     </Switch>
