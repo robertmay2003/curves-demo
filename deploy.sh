@@ -19,7 +19,7 @@ echo "Removing existing files"
 rm -rf dist/*
 
 echo "Generating site"
-parcel build src/index.html --public-url http://robertzmay.com/curves-demo/
+parcel build src/index.html --public-url /curves-demo/
 
 echo "Updating gh-pages branch"
 cd dist && git add --all && git commit -m "Publishing to gh-pages (publish.sh)"
